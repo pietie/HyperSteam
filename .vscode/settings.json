@@ -8,7 +8,9 @@
         "**/node_modules/": true,
         "**/typings/": true,
         "**/releases/": true,
-        "build/": true
+        "build/": true,
+        "tmp/": true,
+        "projects/": true
     }
     
 }
