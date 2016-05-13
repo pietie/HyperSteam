@@ -1,0 +1,58 @@
+<md-card>
+
+  <md-card-header>
+
+      
+      <div md-card-avatar>
+      <img md-card-avatar src="{{ project.steamAvatarUrl? project.steamAvatarUrl:  './images/steamdefprofile.jpg' }}">
+      <md-spinner   *ngIf="isAvatarLoading" style="width:32px;height:32px;position:absolute;top:16px;"></md-spinner>
+      </div>
+      <md-card-title>{{ project.steamPerson? project.steamPerson : "(configure profile)" }}</md-card-title>
+      <md-card-subtitle></md-card-subtitle>
+   </md-card-header>
+
+  <md-content>
+    <md-input placeholder="Steam profile Id (64 bit)" (change)="onSteamIdChanged();" dividerColor="!project.SteamProfileId? 'warn':'primary'"
+      [(ngModel)]="project.SteamProfileId">
+        <!--<span md-suffix>e.g. 76561197960435530, not STEAM_0:0:123456789</span>-->
+        <md-hint align="end">Make sure your profile is <strong>PUBLIC</strong> </md-hint>
+        
+         
+      </md-input>
+      <span style="font-size:12px;">e.g. 76561197960435530, not STEAM_0:0:123456789</span>
+      
+    <br/><br/>
+    <hr/>
+    <span>0 additional AppIds configured</span>&nbsp;&nbsp;<a href="javascript:void(0)">(manage)</a>
+    <hr/>
+  </md-content>
+
+  <md-card-actions>
+    <button md-raised-button color="primary" (click)="onUpdateLibraryClicked();">Update library</button>
+  </md-card-actions>
+</md-card> 
+
+
+<hr/>
+
+
+<div *ngIf="isUpdatingLibrary">
+  <md-spinner style="width:30px;height:30px;display:inline-block;"></md-spinner>
+  <span style="vertical-align: super">Updating library, please wait...</span>
+</div>
+
+Cnt!!: {{ gameList? gameList.length : 0 }}
+
+<md-list class="gameList" *ngIf="project.entries">
+  <md-list-item *ngFor="let game of project.entries | orderBy: '+name'" class="item" (click)="onGameSelected(game);">
+    <img md-list-avatar src="{{ getGameAvatarUrl(game) }}" alt="...">
+    <h3 md-line> {{ game.name }} </h3>
+    <p md-line>
+      <span> {{ game.appid }} | Playtime: {{ game.playtime_forever }} (minutes) </span>
+    </p>
+    <div md-line>
+            <md-progress-bar mode="indeterminate"></md-progress-bar>
+    </div>
+  </md-list-item>
+</md-list>
+ 

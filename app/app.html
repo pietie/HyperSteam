@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Electron Boilerplate</title>
+    <title>HyperSteam</title>
 
     <link href="stylesheets/main.css" rel="stylesheet" type="text/css">
 
@@ -10,18 +10,99 @@
     <script src="helpers/external_links.js"></script>
 
     <script src="app.js"></script>
+    
+    <script src="./node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="./node_modules/zone.js/dist/zone.js"></script>
+    <script src="./node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="./node_modules/systemjs/dist/system.src.js"></script>
+    
+    <script src="./node_modules/whatwg-fetch/fetch.js"></script>
+    
+    <!--<script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script src="./node_modules/toastr/build/toastr.min.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="./node_modules/toastr/build/toastr.min.css">
+    
+    <script>
+            
+      (function(global) {  
+ 
+        // map tells the System loader where to look for things
+        var map = {
+          'app':                        './',
+          'rxjs':                       './node_modules/rxjs',
+          'angular2-in-memory-web-api': './node_modules/angular2-in-memory-web-api',
+          '@angular':                   './node_modules/@angular',
+          '@angular2-material':         './node_modules/@angular2-material',
+          'angular-pipes':              './node_modules/angular-pipes/pipes',
+          'toastr':              './node_modules/toastr/build',
+          'jquery':              './node_modules/jquery/dist',          
+//          'fs-jetpack':                       './node_modules/fs-jetpack',
+        };
+
+        // packages tells the System loader how to load when no filename and/or no extension
+        var packages = {
+          'app':                        { main: 'main.js',  defaultExtension: 'js' },
+          'rxjs':                       { defaultExtension: 'js' },
+          'toastr':                       { defaultExtension: 'js', main: 'toastr.min.js' },
+          'jquery':                       { defaultExtension: 'js', main: 'jquery.min.js' },
+         // 'fs-jetpack':                       { defaultExtension: 'js', main: 'main.js' },
+          'angular2-in-memory-web-api': { defaultExtension: 'js' },
+          'angular-pipes': { defaultExtension: 'js', main: 'index.js' },
+           '@angular2-material/core':   { format: 'cjs', defaultExtension: 'js', main: 'core.js' }, 
+           '@angular2-material/checkbox': { format:'cjs', defaultExtension: 'js', main: 'checkbox.js' },
+           '@angular2-material/button': { format:'cjs', defaultExtension: 'js', main: 'button.js' },
+           '@angular2-material/input': { format:'cjs', defaultExtension: 'js', main: 'input.js' },
+           '@angular2-material/toolbar': { format:'cjs', defaultExtension: 'js', main: 'toolbar.js' },
+           '@angular2-material/progress-bar': { format:'cjs', defaultExtension: 'js', main: 'progress-bar.js' },
+           '@angular2-material/progress-circle': { format:'cjs', defaultExtension: 'js', main: 'progress-circle.js' },
+           '@angular2-material/card': { format:'cjs', defaultExtension: 'js', main: 'card.js' },
+           '@angular2-material/sidenav': { format:'cjs', defaultExtension: 'js', main: 'sidenav.js' },
+           '@angular2-material/list': { format:'cjs', defaultExtension: 'js', main: 'list.js' },
+          
+        };
+
+        var packageNames = [
+          '@angular/common',
+          '@angular/compiler',
+          '@angular/core',
+          '@angular/http',
+          '@angular/platform-browser',
+          '@angular/platform-browser-dynamic',
+          '@angular/router',
+          '@angular/testing',
+          '@angular/upgrade'
+        ];
+
+        // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
+        packageNames.forEach(function(pkgName) {
+          packages[pkgName] = { main: 'index.js', defaultExtension: 'js' };
+        });
+        
+        
+
+        var config = {
+          map: map,
+          packages: packages
+        }
+
+        // filterSystemConfig - index.html's chance to modify config before we register it.
+        if (global.filterSystemConfig) { global.filterSystemConfig(config); }
+
+        System.config(config);
+        
+             
+        System.import("app").then(null, console.error.bind(console));
+
+      })(this);      
+   
+        
+
+    </script>
+    
 </head>
 <body>
-
-    <div class="container">
-        <h1 id="greet"></h1>
-        <p class="subtitle">
-            Welcome to <a href="http://electron.atom.io" class="js-external-link">Electron</a> app running on this magnificent <strong id="platform-info"></strong> machine.
-        </p>
-        <p class="subtitle">
-            You are in <strong id="env-name"></strong> environment.
-        </p>
-    </div>
+   
+    <my-app>Loading, please wait...</my-app>
 
 </body>
 </html>

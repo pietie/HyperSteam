@@ -6,3 +6,7 @@ Thumbs.db
 /build/
 /releases/
 /tmp/
+/app/node_modules
+/app/typings
+/projects
+robobuild.bat

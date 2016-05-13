@@ -1,0 +1,23 @@
+.gameList
+{
+    cursor: pointer;                
+}
+
+* /deep/ md-list-item::shadow div.md-list-item:hover {
+    background-color: #5EABFF;
+    -webkit-transition: all 0.15s ease-in-out;
+    -moz-transition: all 0.15s ease-in-out;
+    -o-transition: all 0.15s ease-in-out;
+    transition: all 0.15s ease-in-out;
+}
+
+* /deep/ md-list-item::shadow div.md-list-item:hover img {
+    transition: all 0.3s ease-in-out;
+    transform: scale(1.5); 
+} 
+
+* /deep/ md-list-item::shadow > h3
+{
+    font-weight: bold;
+}  
+

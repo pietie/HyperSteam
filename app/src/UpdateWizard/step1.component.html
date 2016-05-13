@@ -1,0 +1,18 @@
+<div *ngIf="isLoading">
+    <md-spinner style="width:30px;height:30px;display:inline-block;"></md-spinner>
+    <span style="vertical-align: super">Contacting Steam, please wait...</span>
+</div>
+
+
+Cnt: {{ gameList? gameList.length : 0 }}
+
+<md-list class="gameList" *ngIf="gameList">
+  <md-list-item *ngFor="let game of gameList | orderBy: '+name'" class="item" (click)="onGameSelected(game);" >
+    <img md-list-avatar src="{{ getGameAvatarUrl(game) }}" alt="...">
+    <h3 md-line> {{ game.name }} </h3>
+    <p md-line>
+      <span> {{ game.appid }} | Playtime: {{ game.playtime_forever }} (minutes) </span>
+       
+    </p>
+  </md-list-item>
+</md-list>     
