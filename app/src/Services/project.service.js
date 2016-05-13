@@ -16,8 +16,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var SteamAPI_1 = require('../ObjectModel/SteamAPI');
+var downloader_service_1 = require('./downloader.service');
 var ProjectService = (function () {
-    function ProjectService() {
+    function ProjectService(downloader) {
+        this.downloader = downloader;
     }
     Object.defineProperty(ProjectService.prototype, "SteamProfileId", {
         get: function () {
@@ -57,6 +59,7 @@ var ProjectService = (function () {
             this.entries = [];
         var existing = this.entries.find(function (e) { return e.appid == game.appid; });
         if (existing != null) {
+            console.dir(existing);
             existing.initFrom(game);
             return { updated: true };
         }
@@ -64,12 +67,13 @@ var ProjectService = (function () {
             var newEntry = new ProjectGameEntry();
             newEntry.initFrom(game);
             this.entries.push(newEntry);
+            newEntry.queueMetadataForDownload(this.downloader);
             return { added: true };
         }
     };
     ProjectService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [downloader_service_1.DownloaderService])
     ], ProjectService);
     return ProjectService;
 }());
@@ -85,6 +89,16 @@ var ProjectGameEntry = (function (_super) {
         this.img_logo_url = copy.img_logo_url;
         this.name = copy.name;
         this.playtime_forever = copy.playtime_forever;
+    };
+    ProjectGameEntry.prototype.queueMetadataForDownload = function (downloader) {
+        var info = window.jetpack.inspect("./projects/cache/" + this.appid + "/bp.json");
+        if (info & info.size > 0) {
+            return;
+        }
+        var request = new downloader_service_1.DownloadRequest();
+        request.appId = this.appid;
+        request.type = downloader_service_1.DownloadRequestType.Metadata;
+        downloader.queueRequest(request);
     };
     ProjectGameEntry.prototype.ValidateDownloadedItems = function () {
         /***

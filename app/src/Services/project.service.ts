@@ -3,6 +3,7 @@
 import { Injectable } from '@angular/core';
 
 import { OwnedGame }  from '../ObjectModel/SteamAPI'
+import { DownloaderService, DownloadRequest, DownloadRequestType } from './downloader.service'
 
 @Injectable()
 export class ProjectService {
@@ -13,6 +14,11 @@ export class ProjectService {
     private entries:ProjectGameEntry[];
 
     private Name: string;
+
+    constructor(private downloader:DownloaderService)
+    {
+        
+    }
 
     public get SteamProfileId(): string {
         return this.steamProfileId;
@@ -65,6 +71,7 @@ export class ProjectService {
 
         if (existing != null)
         {
+            console.dir(existing);
             existing.initFrom(game);   
             return { updated: true };
         }
@@ -76,9 +83,10 @@ export class ProjectService {
             
             this.entries.push(newEntry);
             
+            newEntry.queueMetadataForDownload(this.downloader);
+            
             return { added: true };
         }
-        
     } 
 }
 
@@ -96,6 +104,23 @@ export class ProjectGameEntry extends OwnedGame {
         this.img_logo_url = copy.img_logo_url;
         this.name = copy.name;
         this.playtime_forever = copy.playtime_forever;
+    }
+ 
+    public queueMetadataForDownload(downloader:DownloaderService): void 
+    {
+        var info = window.jetpack.inspect(`./projects/cache/${this.appid}/bp.json`);
+        
+        if(info & info.size > 0) // check for existing bp.json file 
+        {
+            return;
+        }
+        
+        let request = new DownloadRequest();
+        
+        request.appId = this.appid;
+        request.type = DownloadRequestType.Metadata;
+
+        downloader.queueRequest(request);
     }
 
     public ValidateDownloadedItems(): void {

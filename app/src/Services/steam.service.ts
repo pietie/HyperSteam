@@ -28,7 +28,7 @@ export class SteamService {
                 
                 if (playerSummaryResponse.players.length > 0) resolve(playerSummaryResponse.players[0]);
                 else reject("Profile not found");
-            });
+            }); 
         });
     }
     
@@ -62,11 +62,11 @@ export class SteamService {
 		// }); 
     }
      
-    public downloadBigPictureMetadata(appId:string) : Promise<SteamStoreAppDetail>
+    public downloadBigPictureMetadata(appId:string) : Observable<R>
     {
-           return new Promise<SteamStoreAppDetail>((resolve, reject) => {
-                this.http.get(`https://store.steampowered.com/api/appdetails/?appids=${appId}`)
-                    .map((res: Response) => res.json())
+           //return new Promise<SteamStoreAppDetail>((resolve, reject) => {
+                return this.http.get(`https://store.steampowered.com/api/appdetails/?appids=${appId}`).map((res: Response) => res.json());
+                    /*
                     .subscribe(
                     data => { 
                         console.dir(data); 
@@ -81,9 +81,9 @@ export class SteamService {
                     },
                     err => { reject(err); },
                     () => {  }
-                    );
+                    );*/
 
-        }); 
+        //}); 
     }
     
 }

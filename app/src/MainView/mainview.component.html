@@ -50,7 +50,7 @@ Cnt!!: {{ gameList? gameList.length : 0 }}
     <p md-line>
       <span> {{ game.appid }} | Playtime: {{ game.playtime_forever }} (minutes) </span>
     </p>
-    <div md-line>
+    <div md-line *ngIf="game.isDownloading">
             <md-progress-bar mode="indeterminate"></md-progress-bar>
     </div>
   </md-list-item>

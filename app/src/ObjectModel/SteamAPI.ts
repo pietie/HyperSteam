@@ -4,7 +4,7 @@ export class OwnedGamesResponse {
 }
 
 export class OwnedGame {
-	public appid: number;
+	public appid: string;
 	public img_icon_url: string;
 	public img_logo_url: string;
 	public name: string;

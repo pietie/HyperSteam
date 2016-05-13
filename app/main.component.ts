@@ -14,6 +14,7 @@ import { UpdateWizardStep1Component } from './src/UpdateWizard/step1.component'
 
 import { ProjectService } from './src/Services/project.service'
 import { SteamService } from './src/Services/steam.service'
+import { DownloaderService } from './src/Services/downloader.service'
 
 import {MdToolbar } from '@angular2-material/toolbar';
 import {MdButton, MdAnchor} from '@angular2-material/button';
@@ -26,7 +27,7 @@ import {MdButton, MdAnchor} from '@angular2-material/button';
 @Component({
 	selector: 'my-app',
 	directives: [ ROUTER_DIRECTIVES, MdToolbar, MdButton, MdAnchor ],
-	providers: [ProjectService, SteamService, HTTP_PROVIDERS],
+	providers: [ProjectService, SteamService, DownloaderService, HTTP_PROVIDERS],
 	styleUrls: [ './main.component.css' ],
 	template: `
 		<div id="appheader">HyperSteam</div>
@@ -78,7 +79,7 @@ export class MainComponent {
 	private noProjectsFound:boolean = false;
 	private projectFileList:string[];
 	
-	constructor(private router:Router, private project:ProjectService)
+	constructor(private router:Router, private project:ProjectService, private downloader: DownloaderService)
 	{ 
         //this.project.setSteamId("76561197960435530");
 		this.router.navigate(["./mainview"], null);

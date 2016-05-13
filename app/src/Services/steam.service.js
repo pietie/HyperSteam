@@ -45,18 +45,25 @@ var SteamService = (function () {
         // }); 
     };
     SteamService.prototype.downloadBigPictureMetadata = function (appId) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            _this.http.get("https://store.steampowered.com/api/appdetails/?appids=" + appId)
-                .map(function (res) { return res.json(); })
-                .subscribe(function (data) {
-                console.dir(data);
-                var appData = data[appId];
-                alert(appData.data.about_the_game);
-                //appData.data.movies[0].webm["sadf"]
-                resolve(data);
-            }, function (err) { reject(err); }, function () { });
-        });
+        //return new Promise<SteamStoreAppDetail>((resolve, reject) => {
+        return this.http.get("https://store.steampowered.com/api/appdetails/?appids=" + appId).map(function (res) { return res.json(); });
+        /*
+        .subscribe(
+        data => {
+            console.dir(data);
+            
+            let appData:SteamStoreAppDetail = data[appId];
+            
+            alert(appData.data.about_the_game);
+            //appData.data.movies[0].webm["sadf"]
+            
+            resolve(data);
+        
+        },
+        err => { reject(err); },
+        () => {  }
+        );*/
+        //}); 
     };
     SteamService.STEAM_API_KEY = "FE7FE7527FEAD4225BE172702C8C71A0";
     SteamService = __decorate([

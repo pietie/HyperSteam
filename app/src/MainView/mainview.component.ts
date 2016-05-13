@@ -80,6 +80,7 @@ export class MainViewComponent {
             else if (numberOfAdds > 0) Util.Info(`${numberOfAdds} new item(s) added`);
             else if (numberOfUpdates > 0) Util.Info(`${numberOfUpdates} item(s) updated`);
             else Util.Info(`No items found. Please check your Steam Profile Id.`);
+            
             //
             
             // TODO: Update existing list, determine # of new items and of updates --> include custom app ids in here?

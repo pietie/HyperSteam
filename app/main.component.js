@@ -17,13 +17,15 @@ var mainview_component_1 = require('./src/MainView/mainview.component');
 var step1_component_1 = require('./src/UpdateWizard/step1.component');
 var project_service_1 = require('./src/Services/project.service');
 var steam_service_1 = require('./src/Services/steam.service');
+var downloader_service_1 = require('./src/Services/downloader.service');
 var toolbar_1 = require('@angular2-material/toolbar');
 var button_1 = require('@angular2-material/button');
 // import * as jetpack from 'fs-jetpack'
 var MainComponent = (function () {
-    function MainComponent(router, project) {
+    function MainComponent(router, project, downloader) {
         this.router = router;
         this.project = project;
+        this.downloader = downloader;
         this.showProjectDialog = false;
         this.noProjectsFound = false;
         //this.project.setSteamId("76561197960435530");
@@ -63,7 +65,7 @@ var MainComponent = (function () {
         core_1.Component({
             selector: 'my-app',
             directives: [router_1.ROUTER_DIRECTIVES, toolbar_1.MdToolbar, button_1.MdButton, button_1.MdAnchor],
-            providers: [project_service_1.ProjectService, steam_service_1.SteamService, http_1.HTTP_PROVIDERS],
+            providers: [project_service_1.ProjectService, steam_service_1.SteamService, downloader_service_1.DownloaderService, http_1.HTTP_PROVIDERS],
             styleUrls: ['./main.component.css'],
             template: "\n\t\t<div id=\"appheader\">HyperSteam</div>\n\t\t\n\t<md-toolbar color2=\"primary\">\n  \t\t<button md-button color=\"primary\" (click)=\"onSaveProjectClicked()\">Save project</button>\n\t\t  <button md-button color=\"primary\" (click)=\"onLoadProjectClicked()\">Load project</button>\n\t</md-toolbar>\n\t\t\n\t\t<a [routerLink]=\"['/mainview']\">Main view</a>\n\t\t  <a [routerLink]=\"['/updatelibrary']\">Update wizard</a>\n\t\t<div class=\"content\" style=\"padding: 10px;\">\n\t\t\t<router-outlet></router-outlet>\n\t\t</div>\n\n<div id=\"loadProjectDialog\" *ngIf=\"showProjectDialog\">\n\n  <div class=\"dlg\">\n    <h3>Load project</h3>\n    \n\t<div class=\"content\">\n\t\t<p *ngIf=\"noProjectsFound\">\n\t\t\tNo project files found in the ./projects directory.\n\t\t</p>\n\t\t\n\t\t<ul *ngIf=\"!noProjectsFound\">\n\t\t\t<div *ngFor=\"let path of projectFileList\">\n\t\t\t\t<a href=\"javascript:void(0)\" (click)=\"loadProject(path);\">{{ path }}</a>\n\t\t\t</div>\n\t\t</ul>\n\t\n\t</div>\n    \n    <div class=\"cmd\">\n        <button md-button (click)=\"showProjectDialog=false\">Cancel</button>      \n    </div> \n  </div>\n  \n</div>\n\n\t"
         }),
@@ -71,7 +73,7 @@ var MainComponent = (function () {
             { path: '/mainview', component: mainview_component_1.MainViewComponent },
             { path: '/updatelibrary', component: step1_component_1.UpdateWizardStep1Component },
         ]), 
-        __metadata('design:paramtypes', [router_1.Router, project_service_1.ProjectService])
+        __metadata('design:paramtypes', [router_1.Router, project_service_1.ProjectService, downloader_service_1.DownloaderService])
     ], MainComponent);
     return MainComponent;
 }());
